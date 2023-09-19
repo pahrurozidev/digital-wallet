@@ -42,7 +42,7 @@ switch (transactionType) {
     default:
         throw new Error("Invalid transaction type");
 }
-
+```
 ## Try-Catch-Finally Statements
 
 To ensure smooth error handling, this Digital Wallet website makes use of try-catch-finally statements. These statements are crucial for maintaining a seamless user experience during transactions, handling errors gracefully, and keeping the user interface clean.
@@ -56,6 +56,7 @@ try {
     // Clear the input field
     document.getElementById("amount").value = "";
 }
+```
 
 The implementation of try-catch-finally statements in this Digital Wallet website follows this structured approach:
 

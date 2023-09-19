@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <title>Digital Wallet</title>
+</head>
+<body>
+    <h1>Digital Wallet</h1>
+
+    <div id="balance">
+        <h2>Your Balance: $<span id="walletBalance">100.00</span></h2>
+    </div>
+
+    <div id="transactionForm">
+        <h2>Make a Transaction</h2>
+        <label for="transactionType">Transaction Type:</label>
+        <select id="transactionType">
+            <option value="deposit">Deposit</option>
+            <option value="withdraw">Withdraw</option>
+        </select>
+        <br>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" step="0.01">
+        <br>
+        <button type="button" onclick="makeTransaction()">Submit</button>
+    </div>
+
+    <div id="transactionResult">
+        <h2>Transaction Result</h2>
+        <p id="resultMessage"></p>
+    </div>
+
+    <script>
+        class Wallet {
+            constructor(balance) {
+                this.balance = balance;
+            }
+
+            deposit(amount) {
+                this.balance += amount;
+            }
+
+            withdraw(amount) {
+                if (amount <= this.balance) {
+                    this.balance -= amount;
+                } else {
+                    throw new Error("Insufficient balance");
+                }
+            }
+        }
+
+        const wallet = new Wallet(100.00);
+
+        function makeTransaction() {
+            const transactionType = document.getElementById("transactionType").value;
+            const amount = parseFloat(document.getElementById("amount").value);
+
+            try {
+                switch (transactionType) {
+                    case "deposit":
+                        wallet.deposit(amount);
+                        break;
+                    case "withdraw":
+                        wallet.withdraw(amount);
+                        break;
+                    default:
+                        throw new Error("Invalid transaction type");
+                }
+
+                document.getElementById("walletBalance").textContent = wallet.balance.toFixed(2);
+                document.getElementById("resultMessage").textContent = `${transactionType.toUpperCase()} of $${amount.toFixed(2)} was successful.`;
+            } catch (error) {
+                document.getElementById("resultMessage").textContent = `Transaction failed: ${error.message}`;
+            } finally {
+                // Clear the input fields
+                document.getElementById("amount").value = "";
+            }
+        }
+    </script>
+</body>
+</html>
